@@ -20,7 +20,12 @@ export function Hero({ bundle }: { bundle: NicheBundle }) {
         </>
       )}
       <div className="relative mx-auto grid max-w-7xl items-center gap-10 px-4 py-20 sm:px-6 md:grid-cols-2 md:py-28 lg:px-8 lg:py-32">
-        <div className="space-y-6">
+        <motion.div
+          className="space-y-6"
+          initial={{ opacity: 0, y: 24 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+        >
           <div className="reveal inline-flex items-center gap-2 rounded-full border border-border bg-card/60 px-3 py-1 text-xs font-medium text-muted-foreground backdrop-blur">
             <Sparkles className="h-3 w-3 text-[color:var(--brand-accent-hex)]" />
             {s?.title ?? bundle.niche.display_name}
