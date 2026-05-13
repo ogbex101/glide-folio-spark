@@ -1,6 +1,7 @@
 import type { NicheBundle } from "@/lib/niche-queries";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Sparkles } from "lucide-react";
+import { motion } from "framer-motion";
 
 export function Hero({ bundle }: { bundle: NicheBundle }) {
   const s = bundle.settings as any;
