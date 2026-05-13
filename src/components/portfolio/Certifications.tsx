@@ -28,7 +28,7 @@ export function Certifications({ bundle, showAll = false }: { bundle: NicheBundl
               <p className="text-sm text-muted-foreground">{c.issuer}</p>
               {c.date_earned && (
                 <p className="mt-1 text-xs text-muted-foreground">
-                  {new Date(c.date_earned).toLocaleDateString(undefined, { year: "numeric", month: "short" })}
+                  {new Date(c.date_earned).toLocaleDateString("en-US", { year: "numeric", month: "short", timeZone: "UTC" })}
                 </p>
               )}
               {c.credential_link && (
