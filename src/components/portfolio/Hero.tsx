@@ -52,9 +52,14 @@ export function Hero({ bundle }: { bundle: NicheBundle }) {
             <Stat label="Happy Clients" value={s?.happy_clients ?? 0} />
             <Stat label="Years Experience" value={s?.years_experience ?? 0} />
           </div>
-        </div>
+        </motion.div>
 
-        <div className="reveal reveal-delay-2 relative">
+        <motion.div
+          className="reveal reveal-delay-2 relative"
+          initial={{ opacity: 0, scale: 0.92 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.8, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
+        >
           <div className="relative mx-auto aspect-square w-full max-w-md">
             <div className="absolute inset-0 -rotate-6 rounded-3xl bg-gradient-brand opacity-20 blur-3xl animate-float" />
             <div className="absolute inset-0 rotate-3 rounded-3xl bg-gradient-brand opacity-30" />
