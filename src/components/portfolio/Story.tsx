@@ -15,7 +15,7 @@ export function Story({ bundle }: { bundle: NicheBundle }) {
         viewport={{ once: true, margin: "-80px" }}
         variants={stagger(0.15)}
       >
-        <div className="md:col-span-3 space-y-5">
+        <motion.div className="md:col-span-3 space-y-5" variants={reveal}>
           <p className="text-lg leading-relaxed text-muted-foreground text-balance">{bundle.story.story_text}</p>
           {bundle.story.quote && (
             <blockquote className="relative rounded-2xl border-l-4 border-[color:var(--brand-primary-hex)] bg-card p-6 font-display text-xl italic shadow-soft">
@@ -23,8 +23,8 @@ export function Story({ bundle }: { bundle: NicheBundle }) {
               {bundle.story.quote}
             </blockquote>
           )}
-        </div>
-        <div className="md:col-span-2">
+        </motion.div>
+        <motion.div className="md:col-span-2" variants={reveal}>
           <div className="aspect-[4/5] overflow-hidden rounded-3xl border border-border bg-gradient-brand shadow-elegant">
             {bundle.story.image_url ? (
               <img src={bundle.story.image_url} alt="My story" className="h-full w-full object-cover" />
@@ -34,8 +34,8 @@ export function Story({ bundle }: { bundle: NicheBundle }) {
               </div>
             )}
           </div>
-        </div>
-      </div>
+        </motion.div>
+      </motion.div>
     </SectionShell>
   );
 }
