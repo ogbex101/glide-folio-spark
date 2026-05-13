@@ -18,8 +18,6 @@ export function Testimonials({ bundle, showAll = false }: { bundle: NicheBundle;
       viewAllTo={!showAll ? "/niche/$slug/testimonials" : undefined}
       viewAllParams={!showAll ? { slug: bundle.niche.slug } : undefined}
     >
-      <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
-        {list.map((t: any) => (
       <motion.div
         className="grid gap-5 md:grid-cols-2 lg:grid-cols-3"
         initial="hidden"
