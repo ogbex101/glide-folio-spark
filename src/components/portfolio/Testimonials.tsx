@@ -1,6 +1,8 @@
 import type { NicheBundle } from "@/lib/niche-queries";
 import { SectionShell } from "./SectionShell";
 import { Star, Quote } from "lucide-react";
+import { motion } from "framer-motion";
+import { slideInLeft, stagger } from "@/lib/motion";
 
 export function Testimonials({ bundle, showAll = false }: { bundle: NicheBundle; showAll?: boolean }) {
   const limit = bundle.limits.testimonials ?? 6;
