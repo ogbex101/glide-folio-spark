@@ -1,12 +1,20 @@
 import type { NicheBundle } from "@/lib/niche-queries";
 import { SectionShell } from "./SectionShell";
 import { Quote } from "lucide-react";
+import { motion } from "framer-motion";
+import { reveal, stagger } from "@/lib/motion";
 
 export function Story({ bundle }: { bundle: NicheBundle }) {
   if (!bundle.story?.story_text) return null;
   return (
     <SectionShell id="story" eyebrow="My story" title="The path that brought me here.">
-      <div className="grid gap-8 md:grid-cols-5 md:gap-12">
+      <motion.div
+        className="grid gap-8 md:grid-cols-5 md:gap-12"
+        initial="hidden"
+        whileInView="show"
+        viewport={{ once: true, margin: "-80px" }}
+        variants={stagger(0.15)}
+      >
         <div className="md:col-span-3 space-y-5">
           <p className="text-lg leading-relaxed text-muted-foreground text-balance">{bundle.story.story_text}</p>
           {bundle.story.quote && (
