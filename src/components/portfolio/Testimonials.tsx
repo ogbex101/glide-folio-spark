@@ -20,7 +20,19 @@ export function Testimonials({ bundle, showAll = false }: { bundle: NicheBundle;
     >
       <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
         {list.map((t: any) => (
-          <figure key={t.id} className="relative rounded-2xl border border-border bg-card p-6 shadow-soft transition-smooth hover:shadow-elegant">
+      <motion.div
+        className="grid gap-5 md:grid-cols-2 lg:grid-cols-3"
+        initial="hidden"
+        whileInView="show"
+        viewport={{ once: true, margin: "-80px" }}
+        variants={stagger(0.12)}
+      >
+        {list.map((t: any) => (
+          <motion.figure
+            key={t.id}
+            variants={slideInLeft}
+            className="relative rounded-2xl border border-border bg-card p-6 shadow-soft transition-smooth hover:shadow-elegant"
+          >
             <Quote className="absolute right-5 top-5 h-8 w-8 text-[color:var(--brand-accent-hex)] opacity-40" />
             <div className="mb-3 flex gap-0.5 text-[color:var(--brand-accent-hex)]">
               {Array.from({ length: t.rating ?? 5 }).map((_, i) => (
@@ -41,9 +53,9 @@ export function Testimonials({ bundle, showAll = false }: { bundle: NicheBundle;
                 {t.role && <div className="text-xs text-muted-foreground">{t.role}</div>}
               </div>
             </figcaption>
-          </figure>
+          </motion.figure>
         ))}
-      </div>
+      </motion.div>
     </SectionShell>
   );
 }
