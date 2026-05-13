@@ -520,12 +520,12 @@ function ProjectModal({
   );
 }
 
-const lineUp = {
+const lineUp: import("framer-motion").Variants = {
   hidden: { opacity: 0, y: 18, filter: "blur(8px)" },
   show: {
     opacity: 1,
     y: 0,
     filter: "blur(0px)",
-    transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] },
+    transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] as any },
   },
 };
