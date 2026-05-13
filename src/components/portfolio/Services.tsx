@@ -1,6 +1,8 @@
 import type { NicheBundle } from "@/lib/niche-queries";
 import { SectionShell } from "./SectionShell";
 import * as Icons from "lucide-react";
+import { motion } from "framer-motion";
+import { fadeUp, stagger } from "@/lib/motion";
 
 export function Services({ bundle }: { bundle: NicheBundle }) {
   const limit = bundle.limits.services ?? 6;
