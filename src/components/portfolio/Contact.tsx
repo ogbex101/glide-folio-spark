@@ -16,8 +16,6 @@ export function Contact({ bundle }: { bundle: NicheBundle }) {
 
   return (
     <SectionShell id="contact" eyebrow="Get in touch" title="Let's build something great." description="Available for new projects. Drop a message and I'll reply within 24 hours.">
-      <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-        {items.map((it) => {
       <motion.div
         className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4"
         initial="hidden"
