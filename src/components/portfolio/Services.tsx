@@ -20,12 +20,19 @@ export function Services({ bundle }: { bundle: NicheBundle }) {
       description="End-to-end execution backed by deep expertise — strategy, delivery, and measurement."
       alt
     >
-      <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+      <motion.div
+        className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3"
+        initial="hidden"
+        whileInView="show"
+        viewport={{ once: true, margin: "-80px" }}
+        variants={stagger(0.1)}
+      >
         {list.map((svc: any) => {
           const Icon = (Icons[svc.icon as keyof typeof Icons] as any) ?? Icons.Star;
           return (
-            <div
+            <motion.div
               key={svc.id}
+              variants={fadeUp}
               className="group relative overflow-hidden rounded-2xl border border-border bg-card p-6 shadow-soft transition-smooth hover:-translate-y-1 hover:shadow-elegant"
             >
               <div className="absolute inset-x-0 top-0 h-1 bg-gradient-brand opacity-0 transition-opacity group-hover:opacity-100" />
@@ -34,10 +41,10 @@ export function Services({ bundle }: { bundle: NicheBundle }) {
               </div>
               <h3 className="mt-4 font-display text-lg font-semibold">{svc.title}</h3>
               <p className="mt-2 text-sm text-muted-foreground">{svc.description}</p>
-            </div>
+            </motion.div>
           );
         })}
-      </div>
+      </motion.div>
     </SectionShell>
   );
 }
