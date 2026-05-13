@@ -75,7 +75,7 @@ export function Hero({ bundle }: { bundle: NicheBundle }) {
               )}
             </div>
           </div>
-        </div>
+        </motion.div>
       </div>
     </section>
   );
