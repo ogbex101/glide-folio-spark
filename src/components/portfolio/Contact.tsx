@@ -1,6 +1,8 @@
 import type { NicheBundle } from "@/lib/niche-queries";
 import { SectionShell } from "./SectionShell";
 import { Mail, Phone, MessageCircle, MapPin } from "lucide-react";
+import { motion } from "framer-motion";
+import { gentleBounce, stagger } from "@/lib/motion";
 
 export function Contact({ bundle }: { bundle: NicheBundle }) {
   const s = bundle.settings;
