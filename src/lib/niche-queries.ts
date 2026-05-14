@@ -1,6 +1,6 @@
 import { queryOptions } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
-import { MOCK } from "./mock-data";
+import { getNicheMock } from "./mock-data";
 
 export type Niche = {
   id: string;
@@ -69,16 +69,18 @@ export const nicheBundleQuery = (slug: string) =>
       const limitsMap: Record<string, number> = {};
       (limits.data ?? []).forEach((l: any) => { limitsMap[l.section_name] = l.max_display; });
 
+      const mock = getNicheMock(slug);
+
       return {
         niche,
-        settings: settings.data,
-        story: story.data,
-        services: (services.data?.length ? services.data : MOCK.services),
-        skills: (skills.data?.length ? skills.data : MOCK.skills),
+        settings: settings.data ?? mock.settings ?? null,
+        story: story.data ?? mock.story ?? null,
+        services: (services.data?.length ? services.data : mock.services ?? []),
+        skills: (skills.data?.length ? skills.data : mock.skills ?? []),
         projects: projects.data ?? [],
-        certifications: certifications.data ?? [],
-        testimonials: (testimonials.data?.length ? testimonials.data : MOCK.testimonials),
-        brandLogos: brandLogos.data ?? [],
+        certifications: (certifications.data?.length ? certifications.data : mock.certifications ?? []),
+        testimonials: (testimonials.data?.length ? testimonials.data : mock.testimonials ?? []),
+        brandLogos: (brandLogos.data?.length ? brandLogos.data : mock.brandLogos ?? []),
         socialLinks: socialLinks.data ?? [],
         emailDesigns: emailDesigns.data ?? [],
         limits: limitsMap,
