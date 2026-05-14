@@ -286,17 +286,23 @@ function ProjectCard({
         }}
       />
 
-      <div className="relative aspect-[4/3] overflow-hidden bg-muted" style={{ transform: "translateZ(30px)" }}>
+      <div
+        className="relative aspect-[4/3] overflow-hidden bg-gradient-to-br from-muted via-background to-muted"
+        style={{ transform: "translateZ(30px)" }}
+      >
         {p.media_url ? (
           <motion.img
             src={p.media_url}
             alt={p.brand_name ?? p.title ?? "Project"}
             draggable={false}
-            className="h-full w-full object-cover"
+            // object-contain → the FULL preview image is always visible (no cropping).
+            className="h-full w-full object-contain p-3 drop-shadow-xl"
             loading="lazy"
-            initial={{ scale: 1.05 }}
-            whileHover={{ scale: 1.15 }}
-            transition={{ duration: 1.2, ease: "easeOut" }}
+            initial={{ opacity: 0, scale: 0.92, y: 20 }}
+            whileInView={{ opacity: 1, scale: 1, y: 0 }}
+            viewport={{ once: true, margin: "-50px" }}
+            transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
+            whileHover={{ scale: 1.04, y: -4 }}
           />
         ) : (
           <div className="grid h-full w-full place-items-center bg-gradient-brand font-display text-3xl font-bold text-primary-foreground">
@@ -400,12 +406,13 @@ function ProjectModal({
                   <motion.img
                     src={project.media_url}
                     alt={project.brand_name ?? project.title ?? ""}
-                    className="h-full w-full object-cover"
-                    initial={{ scale: 1.2 }}
-                    animate={{ scale: 1 }}
-                    transition={{ duration: 1.4, ease: [0.22, 1, 0.36, 1] }}
+                    // Full-image visible inside the modal hero too.
+                    className="h-full w-full object-contain bg-gradient-to-br from-muted/60 via-background to-muted/60"
+                    initial={{ scale: 1.08, opacity: 0 }}
+                    animate={{ scale: 1, opacity: 1 }}
+                    transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-transparent to-transparent" />
+                  <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-background/40 via-transparent to-transparent" />
                 </motion.div>
               )}
 
