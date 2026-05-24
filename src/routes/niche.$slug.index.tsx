@@ -12,16 +12,20 @@ import { Testimonials } from "@/components/portfolio/Testimonials";
 import { BrandLogos } from "@/components/portfolio/BrandLogos";
 import { EmailDesigns } from "@/components/portfolio/EmailDesigns";
 import { Contact } from "@/components/portfolio/Contact";
+import { useState } from "react";
 
-export const Route = createFileRoute("/niche/$slug/")({
-  loader: ({ params, context }) =>
-    context.queryClient.ensureQueryData(nicheBundleQuery(params.slug)),
-  component: NicheHome,
-});
+export const Route = createFileRoute("/niche/$slug/")(
+  {
+    loader: ({ params, context }) =>
+      context.queryClient.ensureQueryData(nicheBundleQuery(params.slug)),
+    component: NicheHome,
+  }
+);
 
 function NicheHome() {
   const { slug } = Route.useParams();
   const { data: bundle } = useSuspenseQuery(nicheBundleQuery(slug));
+  const [techFilter, setTechFilter] = useState<string | null>(null);
 
   if (!bundle) {
     return (
@@ -37,8 +41,12 @@ function NicheHome() {
       <About bundle={bundle} />
       <Story bundle={bundle} />
       <Services bundle={bundle} />
-      <Skills bundle={bundle} />
-      <Projects bundle={bundle} />
+      <Skills
+        bundle={bundle}
+        activeFilter={techFilter}
+        onFilterChange={setTechFilter}
+      />
+      <Projects bundle={bundle} techFilter={techFilter} />
       <EmailDesigns bundle={bundle} />
       <Certifications bundle={bundle} />
       <Testimonials bundle={bundle} />
