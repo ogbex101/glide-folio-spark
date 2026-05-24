@@ -17,6 +17,12 @@ import { Route as NicheSlugTestimonialsRouteImport } from './routes/niche.$slug.
 import { Route as NicheSlugProjectsRouteImport } from './routes/niche.$slug.projects'
 import { Route as NicheSlugEmailDesignsRouteImport } from './routes/niche.$slug.email-designs'
 import { Route as NicheSlugCertificationsRouteImport } from './routes/niche.$slug.certifications'
+import { Route as UserNicheSlugRouteImport } from './routes/$user.niche.$slug'
+import { Route as UserNicheSlugIndexRouteImport } from './routes/$user.niche.$slug.index'
+import { Route as UserNicheSlugProjectsRouteImport } from './routes/$user.niche.$slug.projects'
+import { Route as UserNicheSlugTestimonialsRouteImport } from './routes/$user.niche.$slug.testimonials'
+import { Route as UserNicheSlugCertificationsRouteImport } from './routes/$user.niche.$slug.certifications'
+import { Route as UserNicheSlugEmailDesignsRouteImport } from './routes/$user.niche.$slug.email-designs'
 
 const AdminRoute = AdminRouteImport.update({
   id: '/admin',
@@ -59,6 +65,38 @@ const NicheSlugCertificationsRoute = NicheSlugCertificationsRouteImport.update({
   getParentRoute: () => NicheSlugRoute,
 } as any)
 
+// User-prefixed routes
+const UserNicheSlugRoute = UserNicheSlugRouteImport.update({
+  id: '/$user/niche/$slug',
+  path: '/$user/niche/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const UserNicheSlugIndexRoute = UserNicheSlugIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => UserNicheSlugRoute,
+} as any)
+const UserNicheSlugProjectsRoute = UserNicheSlugProjectsRouteImport.update({
+  id: '/projects',
+  path: '/projects',
+  getParentRoute: () => UserNicheSlugRoute,
+} as any)
+const UserNicheSlugTestimonialsRoute = UserNicheSlugTestimonialsRouteImport.update({
+  id: '/testimonials',
+  path: '/testimonials',
+  getParentRoute: () => UserNicheSlugRoute,
+} as any)
+const UserNicheSlugCertificationsRoute = UserNicheSlugCertificationsRouteImport.update({
+  id: '/certifications',
+  path: '/certifications',
+  getParentRoute: () => UserNicheSlugRoute,
+} as any)
+const UserNicheSlugEmailDesignsRoute = UserNicheSlugEmailDesignsRouteImport.update({
+  id: '/email-designs',
+  path: '/email-designs',
+  getParentRoute: () => UserNicheSlugRoute,
+} as any)
+
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/admin': typeof AdminRoute
@@ -68,6 +106,12 @@ export interface FileRoutesByFullPath {
   '/niche/$slug/projects': typeof NicheSlugProjectsRoute
   '/niche/$slug/testimonials': typeof NicheSlugTestimonialsRoute
   '/niche/$slug/': typeof NicheSlugIndexRoute
+  '/$user/niche/$slug': typeof UserNicheSlugRouteWithChildren
+  '/$user/niche/$slug/': typeof UserNicheSlugIndexRoute
+  '/$user/niche/$slug/projects': typeof UserNicheSlugProjectsRoute
+  '/$user/niche/$slug/testimonials': typeof UserNicheSlugTestimonialsRoute
+  '/$user/niche/$slug/certifications': typeof UserNicheSlugCertificationsRoute
+  '/$user/niche/$slug/email-designs': typeof UserNicheSlugEmailDesignsRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -77,6 +121,11 @@ export interface FileRoutesByTo {
   '/niche/$slug/projects': typeof NicheSlugProjectsRoute
   '/niche/$slug/testimonials': typeof NicheSlugTestimonialsRoute
   '/niche/$slug': typeof NicheSlugIndexRoute
+  '/$user/niche/$slug': typeof UserNicheSlugIndexRoute
+  '/$user/niche/$slug/projects': typeof UserNicheSlugProjectsRoute
+  '/$user/niche/$slug/testimonials': typeof UserNicheSlugTestimonialsRoute
+  '/$user/niche/$slug/certifications': typeof UserNicheSlugCertificationsRoute
+  '/$user/niche/$slug/email-designs': typeof UserNicheSlugEmailDesignsRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -88,6 +137,12 @@ export interface FileRoutesById {
   '/niche/$slug/projects': typeof NicheSlugProjectsRoute
   '/niche/$slug/testimonials': typeof NicheSlugTestimonialsRoute
   '/niche/$slug/': typeof NicheSlugIndexRoute
+  '/$user/niche/$slug': typeof UserNicheSlugRouteWithChildren
+  '/$user/niche/$slug/': typeof UserNicheSlugIndexRoute
+  '/$user/niche/$slug/projects': typeof UserNicheSlugProjectsRoute
+  '/$user/niche/$slug/testimonials': typeof UserNicheSlugTestimonialsRoute
+  '/$user/niche/$slug/certifications': typeof UserNicheSlugCertificationsRoute
+  '/$user/niche/$slug/email-designs': typeof UserNicheSlugEmailDesignsRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -100,6 +155,12 @@ export interface FileRouteTypes {
     | '/niche/$slug/projects'
     | '/niche/$slug/testimonials'
     | '/niche/$slug/'
+    | '/$user/niche/$slug'
+    | '/$user/niche/$slug/'
+    | '/$user/niche/$slug/projects'
+    | '/$user/niche/$slug/testimonials'
+    | '/$user/niche/$slug/certifications'
+    | '/$user/niche/$slug/email-designs'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -109,6 +170,11 @@ export interface FileRouteTypes {
     | '/niche/$slug/projects'
     | '/niche/$slug/testimonials'
     | '/niche/$slug'
+    | '/$user/niche/$slug'
+    | '/$user/niche/$slug/projects'
+    | '/$user/niche/$slug/testimonials'
+    | '/$user/niche/$slug/certifications'
+    | '/$user/niche/$slug/email-designs'
   id:
     | '__root__'
     | '/'
@@ -119,12 +185,19 @@ export interface FileRouteTypes {
     | '/niche/$slug/projects'
     | '/niche/$slug/testimonials'
     | '/niche/$slug/'
+    | '/$user/niche/$slug'
+    | '/$user/niche/$slug/'
+    | '/$user/niche/$slug/projects'
+    | '/$user/niche/$slug/testimonials'
+    | '/$user/niche/$slug/certifications'
+    | '/$user/niche/$slug/email-designs'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AdminRoute: typeof AdminRoute
   NicheSlugRoute: typeof NicheSlugRouteWithChildren
+  UserNicheSlugRoute: typeof UserNicheSlugRouteWithChildren
 }
 
 declare module '@tanstack/react-router' {
@@ -185,6 +258,48 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof NicheSlugCertificationsRouteImport
       parentRoute: typeof NicheSlugRoute
     }
+    '/$user/niche/$slug': {
+      id: '/$user/niche/$slug'
+      path: '/$user/niche/$slug'
+      fullPath: '/$user/niche/$slug'
+      preLoaderRoute: typeof UserNicheSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/$user/niche/$slug/': {
+      id: '/$user/niche/$slug/'
+      path: '/'
+      fullPath: '/$user/niche/$slug/'
+      preLoaderRoute: typeof UserNicheSlugIndexRouteImport
+      parentRoute: typeof UserNicheSlugRoute
+    }
+    '/$user/niche/$slug/projects': {
+      id: '/$user/niche/$slug/projects'
+      path: '/projects'
+      fullPath: '/$user/niche/$slug/projects'
+      preLoaderRoute: typeof UserNicheSlugProjectsRouteImport
+      parentRoute: typeof UserNicheSlugRoute
+    }
+    '/$user/niche/$slug/testimonials': {
+      id: '/$user/niche/$slug/testimonials'
+      path: '/testimonials'
+      fullPath: '/$user/niche/$slug/testimonials'
+      preLoaderRoute: typeof UserNicheSlugTestimonialsRouteImport
+      parentRoute: typeof UserNicheSlugRoute
+    }
+    '/$user/niche/$slug/certifications': {
+      id: '/$user/niche/$slug/certifications'
+      path: '/certifications'
+      fullPath: '/$user/niche/$slug/certifications'
+      preLoaderRoute: typeof UserNicheSlugCertificationsRouteImport
+      parentRoute: typeof UserNicheSlugRoute
+    }
+    '/$user/niche/$slug/email-designs': {
+      id: '/$user/niche/$slug/email-designs'
+      path: '/email-designs'
+      fullPath: '/$user/niche/$slug/email-designs'
+      preLoaderRoute: typeof UserNicheSlugEmailDesignsRouteImport
+      parentRoute: typeof UserNicheSlugRoute
+    }
   }
 }
 
@@ -208,10 +323,31 @@ const NicheSlugRouteWithChildren = NicheSlugRoute._addFileChildren(
   NicheSlugRouteChildren,
 )
 
+interface UserNicheSlugRouteChildren {
+  UserNicheSlugIndexRoute: typeof UserNicheSlugIndexRoute
+  UserNicheSlugProjectsRoute: typeof UserNicheSlugProjectsRoute
+  UserNicheSlugTestimonialsRoute: typeof UserNicheSlugTestimonialsRoute
+  UserNicheSlugCertificationsRoute: typeof UserNicheSlugCertificationsRoute
+  UserNicheSlugEmailDesignsRoute: typeof UserNicheSlugEmailDesignsRoute
+}
+
+const UserNicheSlugRouteChildren: UserNicheSlugRouteChildren = {
+  UserNicheSlugIndexRoute: UserNicheSlugIndexRoute,
+  UserNicheSlugProjectsRoute: UserNicheSlugProjectsRoute,
+  UserNicheSlugTestimonialsRoute: UserNicheSlugTestimonialsRoute,
+  UserNicheSlugCertificationsRoute: UserNicheSlugCertificationsRoute,
+  UserNicheSlugEmailDesignsRoute: UserNicheSlugEmailDesignsRoute,
+}
+
+const UserNicheSlugRouteWithChildren = UserNicheSlugRoute._addFileChildren(
+  UserNicheSlugRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AdminRoute: AdminRoute,
   NicheSlugRoute: NicheSlugRouteWithChildren,
+  UserNicheSlugRoute: UserNicheSlugRouteWithChildren,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
