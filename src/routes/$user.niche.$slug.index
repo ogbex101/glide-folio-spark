@@ -1,4 +1,4 @@
-slugimport { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute } from "@tanstack/react-router";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { nicheBundleQuery } from "@/lib/niche-queries";
 import { Hero } from "@/components/portfolio/Hero";
@@ -40,7 +40,6 @@ function UserNicheHome() {
       ? "Ogbeifun Joshua Osewe"
       : "Ogbeifun Daniel Osewe";
 
-  // Override the name in the bundle for this user
   const overriddenBundle = {
     ...bundle,
     settings: bundle.settings
