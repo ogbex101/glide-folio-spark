@@ -565,7 +565,7 @@ function StoryEditor({ bundle, onSaved }: { bundle: any; onSaved: () => void }) 
         story_long: storyLong,
         quote,
         image_url: imageUrl,
-      };
+      } as any;
       const { error } = bundle.story
         ? await supabase.from("niche_stories").update(payload).eq("niche_id", bundle.niche.id)
         : await supabase.from("niche_stories").insert(payload);
