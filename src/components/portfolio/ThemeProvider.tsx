@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { hexToRgbTriplet } from "@/lib/colors";
 
 interface NicheTheme {
+  full_name?: string | null;
   primary_color?: string | null;
   secondary_color?: string | null;
   accent_color?: string | null;

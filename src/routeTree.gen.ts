@@ -11,7 +11,6 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as AdminRouteImport } from './routes/admin'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as NicheSlugRouteImport } from './routes/niche/$slug'
 import { Route as NicheSlugRouteImport } from './routes/niche.$slug'
 import { Route as NicheSlugIndexRouteImport } from './routes/niche.$slug.index'
 import { Route as NicheSlugTestimonialsRouteImport } from './routes/niche.$slug.testimonials'
@@ -31,11 +30,6 @@ const AdminRoute = AdminRouteImport.update({
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const NicheSlugRoute = NicheSlugRouteImport.update({
-  id: '/niche/$slug',
-  path: '/niche/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
 const NicheSlugRoute = NicheSlugRouteImport.update({
@@ -108,13 +102,13 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/admin': typeof AdminRoute
-  '/niche/$slug': typeof NicheSlugIndexRoute
   '/$user/niche/$slug': typeof UserNicheSlugRouteWithChildren
   '/niche/$slug/certifications': typeof NicheSlugCertificationsRoute
   '/niche/$slug/email-designs': typeof NicheSlugEmailDesignsRoute
   '/niche/$slug/projects': typeof NicheSlugProjectsRoute
   '/niche/$slug/story': typeof NicheSlugStoryRoute
   '/niche/$slug/testimonials': typeof NicheSlugTestimonialsRoute
+  '/niche/$slug': typeof NicheSlugIndexRoute
   '/$user/niche/$slug/certifications': typeof UserNicheSlugCertificationsRoute
   '/$user/niche/$slug/testimonials': typeof UserNicheSlugTestimonialsRoute
 }
@@ -152,13 +146,13 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/admin'
-    | '/niche/$slug'
     | '/$user/niche/$slug'
     | '/niche/$slug/certifications'
     | '/niche/$slug/email-designs'
     | '/niche/$slug/projects'
     | '/niche/$slug/story'
     | '/niche/$slug/testimonials'
+    | '/niche/$slug'
     | '/$user/niche/$slug/certifications'
     | '/$user/niche/$slug/testimonials'
   id:
@@ -180,7 +174,6 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AdminRoute: typeof AdminRoute
-  NicheSlugRoute: typeof NicheSlugRoute
   NicheSlugRoute: typeof NicheSlugRouteWithChildren
   UserNicheSlugRoute: typeof UserNicheSlugRouteWithChildren
 }
@@ -199,13 +192,6 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/niche/$slug': {
-      id: '/niche/$slug'
-      path: '/niche/$slug'
-      fullPath: '/niche/$slug'
-      preLoaderRoute: typeof NicheSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/niche/$slug': {
@@ -320,10 +306,19 @@ const UserNicheSlugRouteWithChildren = UserNicheSlugRoute._addFileChildren(
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AdminRoute: AdminRoute,
-  NicheSlugRoute: NicheSlugRoute,
   NicheSlugRoute: NicheSlugRouteWithChildren,
   UserNicheSlugRoute: UserNicheSlugRouteWithChildren,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}
