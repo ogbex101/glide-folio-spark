@@ -1,9 +1,9 @@
 import type { NicheBundle } from "@/lib/niche-queries";
 import { SectionShell } from "./SectionShell";
-import { motion } from "framer-motion";
-import { fadeUp, stagger } from "@/lib/motion";
+import { motion, type Variants } from "framer-motion";
 import * as Icons from "lucide-react";
-import { X } from "lucide-react";
+import { ArrowDown } from "lucide-react";
+import { ShowcaseStage } from "./showcase/ShowcaseStage";
 
 interface SkillsProps {
   bundle: NicheBundle;
@@ -11,146 +11,129 @@ interface SkillsProps {
   onFilterChange?: (tech: string | null) => void;
 }
 
+/** Pattern B — vertical card flip with a soft scale. */
+const skillsVariants: Variants = {
+  enter: (dir: number) => ({
+    y: dir > 0 ? "40%" : "-40%",
+    opacity: 0,
+    scale: 0.85,
+    rotateX: dir > 0 ? 20 : -20,
+  }),
+  center: { y: 0, opacity: 1, scale: 1, rotateX: 0 },
+  exit: (dir: number) => ({
+    y: dir > 0 ? "-40%" : "40%",
+    opacity: 0,
+    scale: 0.85,
+    rotateX: dir > 0 ? -20 : 20,
+  }),
+};
+
 export function Skills({ bundle, activeFilter, onFilterChange }: SkillsProps) {
   if (bundle.skills.length === 0) return null;
 
-  const handleClick = (skillName: string) => {
-    if (!onFilterChange) return;
-    onFilterChange(activeFilter === skillName ? null : skillName);
-    // Scroll to projects section
+  const filterToProjects = (name: string) => {
+    onFilterChange?.(activeFilter === name ? null : name);
     setTimeout(() => {
-      const el = document.getElementById("projects");
-      if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
-    }, 100);
+      document.getElementById("projects")?.scrollIntoView({ behavior: "smooth", block: "start" });
+    }, 120);
   };
 
   return (
     <SectionShell
       id="skills"
       eyebrow="Skills"
-      title="Tools, languages & techniques I rely on."
-      description={
-        onFilterChange
-          ? "Click any skill to filter projects by that technology."
-          : undefined
-      }
+      title="The toolkit, one at a time."
+      description="Every tool gets the spotlight for 10 seconds. Tap a skill to see the projects I built with it."
     >
-      {/* Active filter banner */}
-      {activeFilter && onFilterChange && (
-        <motion.div
-          initial={{ opacity: 0, y: -10 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: -10 }}
-          className="mb-4 flex items-center justify-between rounded-xl border border-[color:var(--brand-accent-hex)]/40 bg-[color:var(--brand-accent-hex)]/10 px-4 py-2.5"
-        >
-          <span className="text-sm font-medium">
-            Showing projects built with{" "}
-            <span className="font-semibold text-[color:var(--brand-accent-hex)]">
-              {activeFilter}
-            </span>
-          </span>
-          <button
-            onClick={() => onFilterChange(null)}
-            className="ml-3 grid h-6 w-6 place-items-center rounded-full bg-[color:var(--brand-accent-hex)]/20 transition-colors hover:bg-[color:var(--brand-accent-hex)]/40"
-            aria-label="Clear filter"
-          >
-            <X className="h-3.5 w-3.5 text-[color:var(--brand-accent-hex)]" />
-          </button>
-        </motion.div>
-      )}
-
-      <motion.div
-        className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3"
-        initial="hidden"
-        whileInView="show"
-        viewport={{ once: true, margin: "-80px" }}
-        variants={stagger(0.04)}
-      >
-        {bundle.skills.map((skill: any) => {
-          const Icon =
-            (skill.icon &&
-              (Icons[skill.icon as keyof typeof Icons] as any)) ??
-            Icons.Sparkles;
-          const isActive = activeFilter === skill.name;
-          const isFiltering = !!activeFilter;
-          const isClickable = !!onFilterChange;
-
-          return (
-            <motion.div
-              key={skill.id}
-              variants={fadeUp}
-              onClick={() => isClickable && handleClick(skill.name)}
-              className={`group relative rounded-2xl border bg-card p-5 shadow-soft transition-all duration-300 ${
-                isClickable ? "cursor-pointer select-none" : ""
-              } ${
-                isActive
-                  ? "border-[color:var(--brand-accent-hex)] shadow-elegant ring-1 ring-[color:var(--brand-accent-hex)]/40"
-                  : isFiltering && !isActive
-                  ? "border-border opacity-50"
-                  : "border-border hover:-translate-y-0.5 hover:shadow-elegant hover:border-[color:var(--brand-accent-hex)]/50"
-              }`}
-            >
-              {/* Active indicator */}
-              {isActive && (
-                <motion.div
-                  layoutId="skill-active-bg"
-                  className="absolute inset-0 rounded-2xl bg-[color:var(--brand-accent-hex)]/5"
-                />
-              )}
-
-              <div className="relative flex items-center gap-3">
-                <div
-                  className={`grid h-10 w-10 shrink-0 place-items-center rounded-xl shadow-elegant transition-all duration-300 ${
-                    isActive
-                      ? "bg-[color:var(--brand-accent-hex)] text-white scale-110"
-                      : "bg-gradient-brand text-primary-foreground"
-                  }`}
-                >
-                  <Icon className="h-5 w-5" />
-                </div>
-                <div className="min-w-0 flex-1">
-                  <div className="flex items-center justify-between gap-2">
-                    <span
-                      className={`truncate font-medium text-sm transition-colors ${
-                        isActive ? "text-[color:var(--brand-accent-hex)]" : ""
-                      }`}
-                    >
-                      {skill.name}
-                    </span>
-                    <span className="shrink-0 text-xs text-muted-foreground">
-                      {skill.percentage}%
-                    </span>
-                  </div>
-                  <div className="mt-2 h-1.5 w-full overflow-hidden rounded-full bg-muted">
-                    <motion.div
-                      className={`h-full rounded-full transition-all ${
-                        isActive
-                          ? "bg-[color:var(--brand-accent-hex)]"
-                          : "bg-gradient-brand"
-                      }`}
-                      initial={{ width: 0 }}
-                      whileInView={{ width: `${skill.percentage}%` }}
-                      viewport={{ once: true }}
-                      transition={{ duration: 1, ease: "easeOut" }}
+      <div style={{ perspective: 1400 }}>
+        <ShowcaseStage
+          items={bundle.skills}
+          variants={skillsVariants}
+          duration={10_000}
+          stageClassName="min-h-[20rem]"
+          getKey={(s: any) => s.id}
+          controlsLabel={(i, n) => `Skill ${i + 1} of ${n}`}
+          renderItem={(skill: any) => {
+            const Icon =
+              (skill.icon && (Icons[skill.icon as keyof typeof Icons] as any)) ?? Icons.Sparkles;
+            const pct = Math.max(0, Math.min(100, skill.percentage ?? 0));
+            const R = 52;
+            const C = 2 * Math.PI * R;
+            const isActive = activeFilter === skill.name;
+            return (
+              <div className="mx-auto flex max-w-3xl flex-col items-center gap-7 rounded-3xl border border-border bg-card p-8 text-center shadow-elegant sm:flex-row sm:gap-12 sm:p-12 sm:text-left">
+                {/* Radial dial */}
+                <div className="relative grid shrink-0 place-items-center">
+                  <svg width="160" height="160" viewBox="0 0 140 140" className="-rotate-90">
+                    <circle cx="70" cy="70" r={R} fill="none" stroke="currentColor" strokeOpacity={0.12} strokeWidth="10" />
+                    <motion.circle
+                      cx="70"
+                      cy="70"
+                      r={R}
+                      fill="none"
+                      stroke="var(--brand-accent-hex)"
+                      strokeWidth="10"
+                      strokeLinecap="round"
+                      strokeDasharray={C}
+                      initial={{ strokeDashoffset: C }}
+                      animate={{ strokeDashoffset: C * (1 - pct / 100) }}
+                      transition={{ duration: 1.1, ease: [0.22, 1, 0.36, 1], delay: 0.15 }}
                     />
+                  </svg>
+                  <div className="absolute grid place-items-center">
+                    <div className="grid h-12 w-12 place-items-center rounded-2xl bg-gradient-brand text-primary-foreground shadow-elegant">
+                      <Icon className="h-6 w-6" />
+                    </div>
                   </div>
-                  {isClickable && (
-                    <p
-                      className={`mt-1 text-[10px] transition-opacity ${
+                  <span className="absolute -bottom-1 rounded-full border border-border bg-background px-2.5 py-0.5 font-display text-sm font-bold">
+                    {pct}%
+                  </span>
+                </div>
+
+                {/* Detail */}
+                <div className="flex flex-col items-center sm:items-start">
+                  <motion.h3
+                    initial={{ y: 16, opacity: 0 }}
+                    animate={{ y: 0, opacity: 1 }}
+                    transition={{ delay: 0.2, duration: 0.5 }}
+                    className="font-display text-3xl font-bold sm:text-4xl"
+                  >
+                    {skill.name}
+                  </motion.h3>
+                  <motion.p
+                    initial={{ y: 16, opacity: 0 }}
+                    animate={{ y: 0, opacity: 1 }}
+                    transition={{ delay: 0.3, duration: 0.5 }}
+                    className="mt-2 max-w-md text-muted-foreground"
+                  >
+                    {pct >= 90
+                      ? "A daily driver — I reach for this without thinking."
+                      : pct >= 80
+                      ? "Comfortable and production-tested across real projects."
+                      : "Solid working knowledge, and growing with every build."}
+                  </motion.p>
+                  {onFilterChange && (
+                    <motion.button
+                      initial={{ y: 16, opacity: 0 }}
+                      animate={{ y: 0, opacity: 1 }}
+                      transition={{ delay: 0.4, duration: 0.5 }}
+                      onClick={() => filterToProjects(skill.name)}
+                      className={`mt-5 inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-medium transition-smooth ${
                         isActive
-                          ? "text-[color:var(--brand-accent-hex)]/70 opacity-100"
-                          : "opacity-0 group-hover:opacity-100 text-muted-foreground"
+                          ? "bg-[color:var(--brand-accent-hex)] text-white shadow-elegant"
+                          : "border border-border bg-background hover:border-[color:var(--brand-accent-hex)]/50"
                       }`}
                     >
-                      {isActive ? "Filtering projects ↓" : "Click to filter projects"}
-                    </p>
+                      {isActive ? "Showing projects below" : "See projects built with this"}
+                      <ArrowDown className="h-4 w-4" />
+                    </motion.button>
                   )}
                 </div>
               </div>
-            </motion.div>
-          );
-        })}
-      </motion.div>
+            );
+          }}
+        />
+      </div>
     </SectionShell>
   );
 }

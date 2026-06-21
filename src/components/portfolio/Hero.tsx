@@ -172,59 +172,76 @@ export function Hero({ bundle }: { bundle: NicheBundle }) {
 
       <motion.div
         className="relative z-10 mx-auto grid max-w-7xl items-center gap-10 px-4 py-20 sm:px-6 md:grid-cols-2 md:py-28 lg:px-8 lg:py-32"
-        style={{ y: yText, opacity }}
+        style={{ y: yText }}
       >
-        <motion.div className="space-y-6" variants={containerV} initial="hidden" animate="show">
+        <div className="space-y-8">
+          {/* Headline group — this is what gracefully fades on scroll */}
           <motion.div
-            variants={itemV}
-            className="inline-flex items-center gap-2 rounded-full border border-border bg-card/60 px-3 py-1 text-xs font-medium text-muted-foreground backdrop-blur"
+            className="space-y-6"
+            variants={containerV}
+            initial="hidden"
+            animate="show"
+            style={{ opacity }}
           >
-            <motion.span
-              animate={{ rotate: [0, 20, -10, 0], scale: [1, 1.2, 1] }}
-              transition={{ duration: 2.4, repeat: Infinity, ease: "easeInOut" }}
-              className="inline-flex"
+            <motion.div
+              variants={itemV}
+              className="inline-flex items-center gap-2 rounded-full border border-border bg-card/60 px-3 py-1 text-xs font-medium text-muted-foreground backdrop-blur"
             >
-              <Sparkles className="h-3 w-3 text-[color:var(--brand-accent-hex)]" />
-            </motion.span>
-            {s?.title ?? bundle.niche.display_name}
-            <span className="ml-1 inline-block h-1.5 w-1.5 animate-pulse rounded-full bg-[color:var(--brand-accent-hex)]" />
+              <motion.span
+                animate={{ rotate: [0, 20, -10, 0], scale: [1, 1.2, 1] }}
+                transition={{ duration: 2.4, repeat: Infinity, ease: "easeInOut" }}
+                className="inline-flex"
+              >
+                <Sparkles className="h-3 w-3 text-[color:var(--brand-accent-hex)]" />
+              </motion.span>
+              {s?.title ?? bundle.niche.display_name}
+              <span className="ml-1 inline-block h-1.5 w-1.5 animate-pulse rounded-full bg-[color:var(--brand-accent-hex)]" />
+            </motion.div>
+
+            <h1 className="font-display text-4xl font-bold leading-[1.05] tracking-tight text-balance sm:text-5xl lg:text-6xl">
+              <AnimatedWords
+                text={s?.hero_tagline ?? "I build web apps people actually love to use."}
+              />
+            </h1>
+
+            <motion.p variants={itemV} className="max-w-xl text-balance text-base text-muted-foreground sm:text-lg">
+              {s?.bio}
+            </motion.p>
+
+            <motion.div variants={itemV} className="flex flex-wrap items-center gap-3">
+              <Button asChild size="lg" className="group relative overflow-hidden">
+                <a href="#projects">
+                  <span className="relative z-10 inline-flex items-center">
+                    See my work
+                    <ArrowRight className="ml-1 h-4 w-4 transition-transform group-hover:translate-x-1" />
+                  </span>
+                  <span
+                    aria-hidden
+                    className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/30 to-transparent transition-transform duration-700 group-hover:translate-x-full"
+                  />
+                </a>
+              </Button>
+              <Button asChild size="lg" variant="outline" className="group">
+                <a href="#contact">
+                  Get in touch
+                  <span className="ml-1 inline-block transition-transform group-hover:rotate-12">✨</span>
+                </a>
+              </Button>
+            </motion.div>
           </motion.div>
 
-          <h1 className="font-display text-4xl font-bold leading-[1.05] tracking-tight text-balance sm:text-5xl lg:text-6xl">
-            <AnimatedWords text={s?.hero_tagline ?? "Crafting work that drives results."} />
-          </h1>
-
-          <motion.p variants={itemV} className="max-w-xl text-balance text-base text-muted-foreground sm:text-lg">
-            {s?.bio}
-          </motion.p>
-
-          <motion.div variants={itemV} className="flex flex-wrap items-center gap-3">
-            <Button asChild size="lg" className="group relative overflow-hidden">
-              <a href="#projects">
-                <span className="relative z-10 inline-flex items-center">
-                  See my work
-                  <ArrowRight className="ml-1 h-4 w-4 transition-transform group-hover:translate-x-1" />
-                </span>
-                <span
-                  aria-hidden
-                  className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/30 to-transparent transition-transform duration-700 group-hover:translate-x-full"
-                />
-              </a>
-            </Button>
-            <Button asChild size="lg" variant="outline" className="group">
-              <a href="#contact">
-                Get in touch
-                <span className="ml-1 inline-block transition-transform group-hover:rotate-12">✨</span>
-              </a>
-            </Button>
-          </motion.div>
-
-          <motion.div variants={itemV} className="flex flex-wrap gap-6 pt-4">
+          {/* Stats — kept clear & readable; count up when they come into view */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.7, duration: 0.6 }}
+            className="grid grid-cols-3 gap-4 rounded-2xl border border-border bg-card/70 p-4 backdrop-blur sm:gap-6 sm:p-5"
+          >
             <Stat label="Projects" value={s?.projects_count ?? 0} />
             <Stat label="Happy Clients" value={s?.happy_clients ?? 0} />
             <Stat label="Years Experience" value={s?.years_experience ?? 0} />
           </motion.div>
-        </motion.div>
+        </div>
 
         {/* Portrait with 3D tilt */}
         <motion.div

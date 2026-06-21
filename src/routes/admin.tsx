@@ -551,6 +551,7 @@ function ColorField({ label, value, onChange }: { label: string; value: string; 
 
 function StoryEditor({ bundle, onSaved }: { bundle: any; onSaved: () => void }) {
   const [story, setStory] = useState(bundle.story?.story_text ?? "");
+  const [storyLong, setStoryLong] = useState(bundle.story?.story_long ?? "");
   const [quote, setQuote] = useState(bundle.story?.quote ?? "");
   const [imageUrl, setImageUrl] = useState(bundle.story?.image_url ?? "");
   const [busy, setBusy] = useState(false);
@@ -558,7 +559,13 @@ function StoryEditor({ bundle, onSaved }: { bundle: any; onSaved: () => void }) 
   async function save() {
     setBusy(true);
     try {
-      const payload = { niche_id: bundle.niche.id, story_text: story, quote, image_url: imageUrl };
+      const payload = {
+        niche_id: bundle.niche.id,
+        story_text: story,
+        story_long: storyLong,
+        quote,
+        image_url: imageUrl,
+      };
       const { error } = bundle.story
         ? await supabase.from("niche_stories").update(payload).eq("niche_id", bundle.niche.id)
         : await supabase.from("niche_stories").insert(payload);
@@ -573,8 +580,23 @@ function StoryEditor({ bundle, onSaved }: { bundle: any; onSaved: () => void }) 
     <Card>
       <CardHeader><CardTitle>My Story</CardTitle></CardHeader>
       <CardContent className="space-y-4">
-        <div><Label>Story</Label><Textarea rows={4} value={story} onChange={(e) => setStory(e.target.value)} /></div>
-        <div><Label>Quote</Label><Input value={quote} onChange={(e) => setQuote(e.target.value)} /></div>
+        <div>
+          <Label>Short story (shown on homepage)</Label>
+          <Textarea rows={4} value={story} onChange={(e) => setStory(e.target.value)} />
+        </div>
+        <div>
+          <Label>Full story (shown on the “See more story” page)</Label>
+          <Textarea
+            rows={10}
+            value={storyLong}
+            onChange={(e) => setStoryLong(e.target.value)}
+            placeholder="Write the long-form version here. Separate paragraphs with a blank line."
+          />
+          <p className="mt-1 text-xs text-muted-foreground">
+            Leave blank to reuse the short story. Separate paragraphs with a blank line.
+          </p>
+        </div>
+        <div><Label>Signature quote</Label><Input value={quote} onChange={(e) => setQuote(e.target.value)} /></div>
         <FileField label="Story image" value={imageUrl} onChange={setImageUrl} folder="story" accept="image/*" />
         <Button onClick={save} disabled={busy}>{busy ? "Saving…" : "Save story"}</Button>
       </CardContent>
@@ -902,18 +924,19 @@ function BrandLogosSection({ nicheId, rows, limit, onChange }: any) {
   return (
     <CrudShell
       title="Brand logos" table="brand_logos" rows={rows} limit={limit} onChange={onChange} starrable
-      emptyState={() => ({ niche_id: nicheId, logo_url: "", alt_text: "", bg_color: "#FFFFFF", sort_order: 0, is_starred: false })}
-      validate={(s) => (!s.logo_url ? "Logo image required" : null)}
+      emptyState={() => ({ niche_id: nicheId, logo_url: "", alt_text: "", bg_color: "#FFFFFF", external_link: "", sort_order: 0, is_starred: false })}
+      validate={(s) => (!s.alt_text ? "Brand name required" : null)}
       renderRow={(r) => (
         <div className="flex items-center gap-3">
           {r.logo_url && <img src={r.logo_url} alt={r.alt_text} className="h-8 w-8 rounded object-contain" style={{ background: r.bg_color }} />}
-          <div className="font-medium truncate">{r.alt_text || "Untitled logo"}</div>
+          <div className="font-medium truncate">{r.alt_text || "Untitled brand"}</div>
         </div>
       )}
       renderForm={(s, set) => (
         <>
-          <FileField label="Logo image *" value={s.logo_url ?? ""} onChange={(v) => set({ ...s, logo_url: v })} folder="logos" accept="image/*" />
-          <div><Label>Alt text</Label><Input value={s.alt_text ?? ""} onChange={(e) => set({ ...s, alt_text: e.target.value })} /></div>
+          <div><Label>Brand name *</Label><Input value={s.alt_text ?? ""} onChange={(e) => set({ ...s, alt_text: e.target.value })} /></div>
+          <FileField label="Logo image (optional)" value={s.logo_url ?? ""} onChange={(v) => set({ ...s, logo_url: v })} folder="logos" accept="image/*" helperText="Leave empty to auto-generate a polished placeholder logo." />
+          <div><Label>Website / link</Label><Input value={s.external_link ?? ""} onChange={(e) => set({ ...s, external_link: e.target.value })} placeholder="https://…" /></div>
           <ColorField label="Background color" value={s.bg_color ?? "#FFFFFF"} onChange={(v) => set({ ...s, bg_color: v })} />
           <div><Label>Sort order</Label><Input type="number" value={s.sort_order ?? 0} onChange={(e) => set({ ...s, sort_order: Number(e.target.value) })} /></div>
         </>

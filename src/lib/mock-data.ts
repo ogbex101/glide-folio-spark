@@ -40,15 +40,18 @@ const FULLSTACK: NicheMock = {
   settings: {
     full_name: "Ogbeifun Daniel Osewe",
     title: "Full-Stack Developer & Vibe Coder",
-    bio: "I design, code and ship modern web applications end-to-end — from the database all the way to delightful UI. I lean into AI-assisted vibe coding tools to move fast without sacrificing craft, and I obsess over performance, accessibility and motion that feels alive.",
+    hero_tagline: "I turn rough ideas into web apps people actually love to use.",
+    bio: "I'm a full-stack developer who builds the whole thing — the database, the logic, and the polished, animated interface people actually touch. I care about the small stuff: how fast it loads, how it feels on a cheap phone, whether the next developer can read my code. I move quickly with modern tooling, but I never ship something I wouldn't be proud to put my name on.",
     projects_count: 40,
     happy_clients: 25,
     years_experience: 5,
   },
   story: {
     story_text:
-      "I started by tinkering with HTML and CSS late at night, fell in love with the moment an idea becomes something you can click. Years later I've shipped SaaS dashboards, AI assistants, marketplaces and brand sites — most of them solo, all of them with the same obsession for detail. Today I blend traditional engineering with AI-powered vibe-coding platforms like Lovable and Builder.io to ship in days what used to take months, without ever cutting corners on quality.",
-    quote: "Code is just design that happens to run.",
+      "It started with a borrowed laptop and a stubborn question: how do these websites actually work? I spent nights breaking things, refreshing the browser, and chasing that small rush when something finally clicked into place. That curiosity never left — it just got bigger. One landing page became a dashboard, a dashboard became a full product, and somewhere along the way building things for other people turned into the thing I'd happily do for free.",
+    story_long:
+      "I never had a clean, linear start. I learned the way most self-taught developers do — out of order, late at night, and usually because something I wanted to build didn't exist yet. The first time I deployed something to a real URL and sent it to a friend, I was hooked for life. That feeling of \"I thought of this, and now it's live and you can touch it\" is still the reason I do this.\n\nThe early years were messy in the best way. I shipped ugly projects, rewrote them, broke production more than once, and learned that the bugs I hated most were the ones that taught me the most. I stopped chasing clever code and started caring about code the next person could actually read — usually because that next person was me, six months later, with no memory of what I'd written.\n\nOver time I grew from \"can you make this button work\" into building entire products end to end: the database, the API, the auth, the payments, and the polished, animated front end on top. I fell hard for design too — motion, spacing, the tiny details most people feel but never notice. I learned that performance and accessibility aren't extras you bolt on later; they're part of respecting the people who use what you build.\n\nThese days I move fast without cutting corners. I lean into modern tooling and AI-assisted workflows to go from idea to working product in days, then spend my energy where it actually matters — the experience, the reliability, the feel of the thing. I've built gaming platforms, marketplaces, trading dashboards, streaming apps and brand sites, most of them solo, all of them with the same obsession I had on night one.\n\nI'm still that curious kid breaking things to understand them. I just have better tools now — and a much longer list of ideas I can't wait to ship.",
+    quote: "As long as there is programming, there is no idea that can't be materialized or digitalized on the web.",
     image_url:
       "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=900&q=80",
   },
@@ -237,6 +240,16 @@ const BY_NICHE: Record<string, NicheMock> = {
 export function getNicheMock(slug: string): NicheMock {
   return { ...GENERIC, ...(BY_NICHE[slug] ?? {}) };
 }
+
+// Rotating quotes for the Story section — written to reflect the real
+// journey of a self-taught builder. The first one is the founder's signature line.
+export const DEV_QUOTES: string[] = [
+  "As long as there is programming, there is no idea that can't be materialized or digitalized on the web.",
+  "Every bug I ever cursed at turned out to be the lesson I actually needed.",
+  "I don't write code to look clever — I write it so the next person, usually me, can breathe.",
+  "Shipping beats perfect. You learn more from one thing that's live than ten that are 'almost ready.'",
+  "The best feature I ever built started as a problem that personally annoyed me.",
+];
 
 // Backwards-compatible export (was used by older code paths).
 export const MOCK = {

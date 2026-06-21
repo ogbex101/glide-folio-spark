@@ -18,27 +18,30 @@ export type Database = {
         Row: {
           alt_text: string | null
           bg_color: string | null
+          external_link: string | null
           id: string
           is_starred: boolean | null
-          logo_url: string
+          logo_url: string | null
           niche_id: string
           sort_order: number | null
         }
         Insert: {
           alt_text?: string | null
           bg_color?: string | null
+          external_link?: string | null
           id?: string
           is_starred?: boolean | null
-          logo_url: string
+          logo_url?: string | null
           niche_id: string
           sort_order?: number | null
         }
         Update: {
           alt_text?: string | null
           bg_color?: string | null
+          external_link?: string | null
           id?: string
           is_starred?: boolean | null
-          logo_url?: string
+          logo_url?: string | null
           niche_id?: string
           sort_order?: number | null
         }
@@ -253,6 +256,7 @@ export type Database = {
           niche_id: string
           quote: string | null
           story_text: string | null
+          story_long: string | null
         }
         Insert: {
           id?: string
@@ -260,6 +264,7 @@ export type Database = {
           niche_id: string
           quote?: string | null
           story_text?: string | null
+          story_long?: string | null
         }
         Update: {
           id?: string
@@ -267,6 +272,7 @@ export type Database = {
           niche_id?: string
           quote?: string | null
           story_text?: string | null
+          story_long?: string | null
         }
         Relationships: [
           {

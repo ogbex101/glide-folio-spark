@@ -12,7 +12,7 @@ import { Testimonials } from "@/components/portfolio/Testimonials";
 import { BrandLogos } from "@/components/portfolio/BrandLogos";
 import { EmailDesigns } from "@/components/portfolio/EmailDesigns";
 import { Contact } from "@/components/portfolio/Contact";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export const Route = createFileRoute("/niche/$slug/")(
   {
@@ -26,6 +26,16 @@ function NicheHome() {
   const { slug } = Route.useParams();
   const { data: bundle } = useSuspenseQuery(nicheBundleQuery(slug));
   const [techFilter, setTechFilter] = useState<string | null>(null);
+
+  // Honour #section hashes arriving from other pages (e.g. the nav on subpages).
+  useEffect(() => {
+    const id = window.location.hash.replace("#", "");
+    if (!id) return;
+    const t = setTimeout(() => {
+      document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" });
+    }, 350);
+    return () => clearTimeout(t);
+  }, [slug]);
 
   if (!bundle) {
     return (
