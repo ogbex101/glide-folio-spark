@@ -2,6 +2,14 @@
 // fill in when a section has no rows yet. Replace by adding records via the
 // admin dashboard.
 
+import customerResultShot from "@/assets/projects/customer-result.png.asset.json";
+import motionHealthShot from "@/assets/projects/motion-health.png.asset.json";
+import alliedPropertiesShot from "@/assets/projects/allied-properties.png.asset.json";
+import innateGatheringShot from "@/assets/projects/innate-gathering.png.asset.json";
+import clairvoyantShot from "@/assets/projects/clairvoyant-program.png.asset.json";
+import mdanzShot from "@/assets/projects/mdanz.png.asset.json";
+import faithPortfolioShot from "@/assets/projects/faith-portfolio.png.asset.json";
+
 type AnyRecord = Record<string, any>;
 
 export type NicheMock = {
@@ -230,6 +238,90 @@ export const FULLSTACK_PROJECTS = [
     technologies: ["React & Next.js", "WebRTC & Streaming", "Node.js & Bun", "Supabase / Postgres"],
     is_starred: true,
     sort_order: 9,
+  },
+  {
+    id: "fp-10",
+    brand_name: "Customer Result",
+    description: "Homepage redesign focused on improving messaging hierarchy and conversion flow — clearer value prop, tighter sections, stronger CTAs.",
+    category: "Homepage Redesign",
+    platform: "Web",
+    media_url: customerResultShot.url,
+    external_link: "https://outcome-engine-core.lovable.app/",
+    technologies: ["React", "Tailwind CSS", "Framer Motion", "Lovable (Vibe Coding)"],
+    is_starred: true,
+    sort_order: 10,
+  },
+  {
+    id: "fp-11",
+    brand_name: "Motion Health",
+    description: "Healthtech homepage redesign emphasizing credibility and patient outcomes — trust-first layout with clinical proof and clear next steps.",
+    category: "Healthtech Redesign",
+    platform: "Web",
+    media_url: motionHealthShot.url,
+    external_link: "https://motion-health-launch.lovable.app/",
+    technologies: ["React", "Tailwind CSS", "Framer Motion", "Lovable (Vibe Coding)"],
+    is_starred: true,
+    sort_order: 11,
+  },
+  {
+    id: "fp-12",
+    brand_name: "Allied Properties",
+    description: "Institutional real estate homepage with a credibility-first design — portfolio depth, leadership, and investor-grade polish.",
+    category: "Real Estate",
+    platform: "Web",
+    media_url: alliedPropertiesShot.url,
+    external_link: "https://allied-property-compass.lovable.app/",
+    technologies: ["React", "Tailwind CSS", "Framer Motion", "Lovable (Vibe Coding)"],
+    is_starred: true,
+    sort_order: 12,
+  },
+  {
+    id: "fp-13",
+    brand_name: "Innate Gathering",
+    description: "Leadpages landing page redesign that preserves the brand's warm, intimate aesthetic while modernising structure and conversion paths.",
+    category: "Landing Page",
+    platform: "Web",
+    media_url: innateGatheringShot.url,
+    external_link: "https://golden-coast-gather.lovable.app/",
+    technologies: ["React", "Tailwind CSS", "Framer Motion", "Lovable (Vibe Coding)"],
+    is_starred: true,
+    sort_order: 13,
+  },
+  {
+    id: "fp-14",
+    brand_name: "Clairvoyant Program",
+    description: "Readability and layout overhaul that keeps the existing visual identity intact while making the content far easier to consume.",
+    category: "UX Redesign",
+    platform: "Web",
+    media_url: clairvoyantShot.url,
+    external_link: "https://serene-path-redesign.lovable.app/",
+    technologies: ["React", "Tailwind CSS", "Framer Motion", "Lovable (Vibe Coding)"],
+    is_starred: true,
+    sort_order: 14,
+  },
+  {
+    id: "fp-15",
+    brand_name: "Muscular Dystrophy New Zealand",
+    description: "Modern nonprofit homepage built around trust, donations and membership growth — clear impact storytelling and frictionless giving.",
+    category: "Nonprofit",
+    platform: "Web",
+    media_url: mdanzShot.url,
+    external_link: "https://heart-of-nz.lovable.app/",
+    technologies: ["React", "Tailwind CSS", "Framer Motion", "Lovable (Vibe Coding)"],
+    is_starred: true,
+    sort_order: 15,
+  },
+  {
+    id: "fp-16",
+    brand_name: "Faith Portfolio",
+    description: "Personal portfolio showcasing web design and development work — clean typography, smooth motion, and a focused case-study layout.",
+    category: "Portfolio",
+    platform: "Web",
+    media_url: faithPortfolioShot.url,
+    external_link: "https://caleb-ai-vision.lovable.app/faith",
+    technologies: ["React", "Tailwind CSS", "Framer Motion", "Lovable (Vibe Coding)"],
+    is_starred: true,
+    sort_order: 16,
   },
 ];
 
