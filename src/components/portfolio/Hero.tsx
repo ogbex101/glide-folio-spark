@@ -171,88 +171,19 @@ export function Hero({ bundle }: { bundle: NicheBundle }) {
       )}
 
       <motion.div
-        className="relative z-10 mx-auto grid max-w-7xl items-center gap-10 px-4 py-20 sm:px-6 md:grid-cols-2 md:py-28 lg:px-8 lg:py-32"
+        className="relative z-10 mx-auto w-full max-w-7xl px-4 py-20 sm:px-6 md:py-28 lg:px-8 lg:py-32"
         style={{ y: yText }}
       >
-        <div className="space-y-8">
-          {/* Headline group — this is what gracefully fades on scroll */}
-          <motion.div
-            className="space-y-6"
-            variants={containerV}
-            initial="hidden"
-            animate="show"
-            style={{ opacity }}
-          >
-            <motion.div
-              variants={itemV}
-              className="inline-flex items-center gap-2 rounded-full border border-border bg-card/60 px-3 py-1 text-xs font-medium text-muted-foreground backdrop-blur"
-            >
-              <motion.span
-                animate={{ rotate: [0, 20, -10, 0], scale: [1, 1.2, 1] }}
-                transition={{ duration: 2.4, repeat: Infinity, ease: "easeInOut" }}
-                className="inline-flex"
-              >
-                <Sparkles className="h-3 w-3 text-[color:var(--brand-accent-hex)]" />
-              </motion.span>
-              {s?.title ?? bundle.niche.display_name}
-              <span className="ml-1 inline-block h-1.5 w-1.5 animate-pulse rounded-full bg-[color:var(--brand-accent-hex)]" />
-            </motion.div>
-
-            <h1 className="font-display text-4xl font-bold leading-[1.05] tracking-tight text-balance sm:text-5xl lg:text-6xl">
-              <AnimatedWords
-                text={s?.hero_tagline ?? "I build web apps people actually love to use."}
-              />
-            </h1>
-
-            <motion.p variants={itemV} className="max-w-xl text-balance text-base text-muted-foreground sm:text-lg">
-              {s?.bio}
-            </motion.p>
-
-            <motion.div variants={itemV} className="flex flex-wrap items-center gap-3">
-              <Button asChild size="lg" className="group relative overflow-hidden">
-                <a href="#projects">
-                  <span className="relative z-10 inline-flex items-center">
-                    See my work
-                    <ArrowRight className="ml-1 h-4 w-4 transition-transform group-hover:translate-x-1" />
-                  </span>
-                  <span
-                    aria-hidden
-                    className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/30 to-transparent transition-transform duration-700 group-hover:translate-x-full"
-                  />
-                </a>
-              </Button>
-              <Button asChild size="lg" variant="outline" className="group">
-                <a href="#contact">
-                  Get in touch
-                  <span className="ml-1 inline-block transition-transform group-hover:rotate-12">✨</span>
-                </a>
-              </Button>
-            </motion.div>
-          </motion.div>
-
-          {/* Stats — kept clear & readable; count up when they come into view */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.7, duration: 0.6 }}
-            className="grid grid-cols-3 gap-4 rounded-2xl border border-border bg-card/70 p-4 backdrop-blur sm:gap-6 sm:p-5"
-          >
-            <Stat label="Projects" value={s?.projects_count ?? 0} />
-            <Stat label="Happy Clients" value={s?.happy_clients ?? 0} />
-            <Stat label="Years Experience" value={s?.years_experience ?? 0} />
-          </motion.div>
-        </div>
-
-        {/* Portrait with 3D tilt */}
+        {/* Full-width portrait with 3D tilt + overlaid content */}
         <motion.div
           className="relative"
-          initial={{ opacity: 0, scale: 0.85, rotateY: -25 }}
+          initial={{ opacity: 0, scale: 0.92, rotateY: -10 }}
           animate={{ opacity: 1, scale: 1, rotateY: 0 }}
           transition={{ duration: 1.1, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
           style={{ transformStyle: "preserve-3d" }}
         >
           <motion.div
-            className="relative mx-auto aspect-square w-full max-w-md"
+            className="relative w-full aspect-[16/10] sm:aspect-[16/9] lg:aspect-[21/9]"
             style={{ rotateX: rotX, rotateY: rotY, transformStyle: "preserve-3d" }}
           >
             {/* Animated rotating conic glow */}
@@ -267,8 +198,8 @@ export function Hero({ bundle }: { bundle: NicheBundle }) {
               transition={{ duration: 14, repeat: Infinity, ease: "linear" }}
             />
             <motion.div
-              className="absolute inset-0 -rotate-6 rounded-3xl bg-gradient-brand opacity-20 blur-3xl"
-              animate={{ rotate: [-6, -2, -6] }}
+              className="absolute inset-0 -rotate-2 rounded-3xl bg-gradient-brand opacity-20 blur-3xl"
+              animate={{ rotate: [-2, 1, -2] }}
               transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
             />
 
@@ -293,23 +224,108 @@ export function Hero({ bundle }: { bundle: NicheBundle }) {
                 </div>
               )}
 
+              {/* Readability gradient for overlaid text */}
+              <div
+                aria-hidden
+                className="pointer-events-none absolute inset-0"
+                style={{
+                  background:
+                    "linear-gradient(90deg, rgba(0,0,0,0.78) 0%, rgba(0,0,0,0.55) 40%, rgba(0,0,0,0.25) 70%, rgba(0,0,0,0.1) 100%)",
+                }}
+              />
+              <div
+                aria-hidden
+                className="pointer-events-none absolute inset-x-0 bottom-0 h-1/2"
+                style={{
+                  background:
+                    "linear-gradient(to top, rgba(0,0,0,0.7), transparent)",
+                }}
+              />
+
               {/* Sweeping shine */}
               <motion.div
                 aria-hidden
                 className="pointer-events-none absolute inset-0"
                 style={{
                   background:
-                    "linear-gradient(115deg, transparent 35%, color-mix(in oklab, white 40%, transparent) 50%, transparent 65%)",
+                    "linear-gradient(115deg, transparent 35%, color-mix(in oklab, white 25%, transparent) 50%, transparent 65%)",
                 }}
                 initial={{ x: "-120%" }}
                 animate={{ x: "120%" }}
                 transition={{ duration: 2.4, delay: 1.2, ease: "easeInOut", repeat: Infinity, repeatDelay: 5 }}
               />
+
+              {/* Overlaid content: badge, headline, bio, buttons */}
+              <div className="absolute inset-0 z-10 flex items-center">
+                <div className="w-full px-6 sm:px-10 lg:px-16">
+                  <motion.div
+                    className="max-w-2xl space-y-6 text-white"
+                    variants={containerV}
+                    initial="hidden"
+                    animate="show"
+                    style={{ opacity, transform: "translateZ(60px)" }}
+                  >
+                    <motion.div
+                      variants={itemV}
+                      className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-3 py-1 text-xs font-medium text-white backdrop-blur"
+                    >
+                      <motion.span
+                        animate={{ rotate: [0, 20, -10, 0], scale: [1, 1.2, 1] }}
+                        transition={{ duration: 2.4, repeat: Infinity, ease: "easeInOut" }}
+                        className="inline-flex"
+                      >
+                        <Sparkles className="h-3 w-3 text-[color:var(--brand-accent-hex)]" />
+                      </motion.span>
+                      {s?.title ?? bundle.niche.display_name}
+                      <span className="ml-1 inline-block h-1.5 w-1.5 animate-pulse rounded-full bg-[color:var(--brand-accent-hex)]" />
+                    </motion.div>
+
+                    <h1 className="font-display text-3xl font-bold leading-[1.05] tracking-tight text-balance text-white drop-shadow-lg sm:text-4xl lg:text-6xl">
+                      <AnimatedWords
+                        text={s?.hero_tagline ?? "I build web apps people actually love to use."}
+                      />
+                    </h1>
+
+                    <motion.p
+                      variants={itemV}
+                      className="max-w-xl text-balance text-sm text-white/85 drop-shadow sm:text-base lg:text-lg"
+                    >
+                      {s?.bio}
+                    </motion.p>
+
+                    <motion.div variants={itemV} className="flex flex-wrap items-center gap-3">
+                      <Button asChild size="lg" className="group relative overflow-hidden">
+                        <a href="#projects">
+                          <span className="relative z-10 inline-flex items-center">
+                            See my work
+                            <ArrowRight className="ml-1 h-4 w-4 transition-transform group-hover:translate-x-1" />
+                          </span>
+                          <span
+                            aria-hidden
+                            className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/30 to-transparent transition-transform duration-700 group-hover:translate-x-full"
+                          />
+                        </a>
+                      </Button>
+                      <Button
+                        asChild
+                        size="lg"
+                        variant="outline"
+                        className="group border-white/40 bg-white/10 text-white backdrop-blur hover:bg-white/20 hover:text-white"
+                      >
+                        <a href="#contact">
+                          Get in touch
+                          <span className="ml-1 inline-block transition-transform group-hover:rotate-12">✨</span>
+                        </a>
+                      </Button>
+                    </motion.div>
+                  </motion.div>
+                </div>
+              </div>
             </div>
 
             {/* Floating accent chips */}
             <motion.div
-              className="absolute -right-4 top-8 rounded-full border border-border bg-card/80 px-3 py-1.5 text-xs font-medium shadow-soft backdrop-blur"
+              className="absolute -right-2 top-6 rounded-full border border-white/20 bg-black/40 px-3 py-1.5 text-xs font-medium text-white shadow-soft backdrop-blur sm:-right-4 sm:top-8"
               style={{ transform: "translateZ(80px)" }}
               animate={{ y: [0, -8, 0] }}
               transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
@@ -317,7 +333,7 @@ export function Hero({ bundle }: { bundle: NicheBundle }) {
               ✦ Available
             </motion.div>
             <motion.div
-              className="absolute -left-6 bottom-12 rounded-full border border-border bg-card/80 px-3 py-1.5 text-xs font-medium shadow-soft backdrop-blur"
+              className="absolute -left-2 bottom-8 rounded-full border border-white/20 bg-black/40 px-3 py-1.5 text-xs font-medium text-white shadow-soft backdrop-blur sm:-left-6 sm:bottom-12"
               style={{ transform: "translateZ(60px)" }}
               animate={{ y: [0, 8, 0] }}
               transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 0.6 }}
@@ -325,8 +341,21 @@ export function Hero({ bundle }: { bundle: NicheBundle }) {
               ⚡ Fast delivery
             </motion.div>
           </motion.div>
+
+          {/* Stats — below the image, full width */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.7, duration: 0.6 }}
+            className="mt-8 grid grid-cols-3 gap-4 rounded-2xl border border-border bg-card/70 p-4 backdrop-blur sm:gap-6 sm:p-5"
+          >
+            <Stat label="Projects" value={s?.projects_count ?? 0} />
+            <Stat label="Happy Clients" value={s?.happy_clients ?? 0} />
+            <Stat label="Years Experience" value={s?.years_experience ?? 0} />
+          </motion.div>
         </motion.div>
       </motion.div>
+
 
       {/* Scroll cue */}
       <motion.div
